@@ -10,7 +10,7 @@ graph = {
 
 # Depth-First Search (DFS) - Iterative using Stack
 def dfs(graph, start):
-    visited = []
+    visited = {}
     stack = [start]
     
     while stack:
@@ -29,7 +29,7 @@ def dfs(graph, start):
 
 # Breadth-First Search (BFS) using Queue
 def bfs(graph, start):
-    visited = []
+    visited = {}
     queue = [start]
     visited.append(start)
     
