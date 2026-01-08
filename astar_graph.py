@@ -1,15 +1,15 @@
-def a_star(graph, start, goal, heuristic):
-    open_list = {start}
-    closed_set = set()
+def astar(graph, start, goal, heuristic):
+    openlist = {start}
+    closed = set()
     parent = {start: None}
     g_cost = {start: 0}
 
     def f(node):
         return g_cost[node] + heuristic[node]
 
-    while open_list:
-        current = min(open_list, key=f)
-        open_list.remove(current)
+    while openlist:
+        current = min(openlist, key=f)
+        openlist.remove(current)
 
         if current == goal:
             path = []
@@ -23,17 +23,47 @@ def a_star(graph, start, goal, heuristic):
             print("Total cost:", g_cost[goal])
             return
 
-        closed_set.add(current)
+        closed.add(current)
 
-        for neighbour, cost in graph[current]:
+        for neighbour, cost in graph.get(current, []):
             new_g = g_cost[current] + cost
 
-            if neighbour in closed_set:
+            if neighbour in closed:
                 continue
 
             if neighbour not in g_cost or new_g < g_cost[neighbour]:
                 g_cost[neighbour] = new_g
                 parent[neighbour] = current
-                open_list.add(neighbour)
+                openlist.add(neighbour)
 
     print("Goal not found")
+
+graph = {
+    'A': [('B', 1), ('C', 2), ('E', 2)],
+    'B': [('D', 1), ('F', 5)],
+    'C': [('E', 2)],
+    'E': [('F', 2), ('D', 6)],
+    'F': [('D', 1)],
+    'D': []
+}
+
+heuristic_bad = {
+    'A': 2,
+    'B': 100,   # severely overestimated
+    'C': 1,
+    'E': 1,
+    'F': 1,
+    'D': 0
+}
+
+heuristic = {
+    'A': 2,
+    'B': 1,
+    'C': 1,
+    'E': 1,
+    'F': 1,
+    'D': 0
+}
+
+astar(graph, 'A', 'D', heuristic)
+astar(graph, 'A', 'D', heuristic_bad)
