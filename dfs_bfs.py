@@ -10,14 +10,14 @@ graph = {
 
 # Depth-First Search (DFS) - Iterative using Stack
 def dfs(graph, start):
-    visited = {}
+    visited = {}          # dictionary to track visited nodes
     stack = [start]
     
     while stack:
         node = stack.pop()
         
         if node not in visited:
-            visited.append(node)
+            visited[node] = True
             print(node, end=' ')
             
             # Add neighbors in reverse order to maintain left-to-right traversal
@@ -27,11 +27,12 @@ def dfs(graph, start):
     
     return visited
 
+
 # Breadth-First Search (BFS) using Queue
 def bfs(graph, start):
     visited = {}
     queue = [start]
-    visited.append(start)
+    visited[start] = True
     
     while queue:
         node = queue.pop(0)
@@ -39,13 +40,15 @@ def bfs(graph, start):
         
         for neighbor in graph[node]:
             if neighbor not in visited:
-                visited.append(neighbor)
+                visited[neighbor] = True
                 queue.append(neighbor)
     
     return visited
 
+
 print("DFS starting from 'A':")
 dfs(graph, 'A')
 print("\n")
+
 print("BFS starting from 'A':")
 bfs(graph, 'A')
