@@ -25,7 +25,7 @@ def astar(graph, start, goal, heuristic):
 
         closed.add(current)
 
-        for neighbour, cost in graph.get(current, []):
+        for neighbour, cost in graph[current):
             new_g = g_cost[current] + cost
 
             if neighbour in closed:
