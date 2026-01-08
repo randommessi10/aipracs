@@ -8,7 +8,8 @@ def befs(graph, start, goal, heuristic):
 
         if node == goal:
             print("Goal found")
-            return path
+            print("Path:", path)
+            return  # stop execution without returning the path
 
         if node not in visited:
             visited[node] = True
@@ -20,4 +21,3 @@ def befs(graph, start, goal, heuristic):
                     )
 
     print("Goal not found")
-    return None
