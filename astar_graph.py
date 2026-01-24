@@ -1,58 +1,69 @@
-# Graph representation with edge weights
+def astar(graph, start, goal, heuristic):
+    openlist = {start}
+    closed = set()
+    parent = {start: None}
+    g_cost = {start: 0}
+
+    def f(node):
+        return g_cost[node] + heuristic[node]
+
+    while openlist:
+        current = min(openlist, key=f)
+        openlist.remove(current)
+
+        if current == goal:
+            path = []
+            while current is not None:
+                path.append(current)
+                current = parent[current]
+            path.reverse()
+
+            print("Goal found:", goal)
+            print("Path:", " -> ".join(path))
+            print("Total cost:", g_cost[goal])
+            return
+
+        closed.add(current)
+
+        for neighbour, cost in graph[current]:
+            new_g = g_cost[current] + cost
+
+            if neighbour in closed:
+                continue
+
+            if neighbour not in g_cost or new_g < g_cost[neighbour]:
+                g_cost[neighbour] = new_g
+                parent[neighbour] = current
+                openlist.add(neighbour)
+
+    print("Goal not found")
+
 graph = {
-    'A': [('B', 1), ('C', 4)],
-    'B': [('A', 1), ('D', 2), ('E', 5)],
-    'C': [('A', 4), ('F', 3)],
-    'D': [('B', 2)],
-    'E': [('B', 5), ('F', 1)],
-    'F': [('C', 3), ('E', 1)]
+    'A': [('B', 1), ('C', 2), ('E', 2)],
+    'B': [('D', 1), ('F', 5)],
+    'C': [('E', 2)],
+    'E': [('F', 2), ('D', 6)],
+    'F': [('D', 1)],
+    'D': []
 }
 
-# Heuristic values (estimated distance to goal)
+heuristic_bad = {
+    'A': 2,
+    'B': 100,   # severely overestimated
+    'C': 1,
+    'E': 1,
+    'F': 1,
+    'D': 0
+}
+
 heuristic = {
-    'A': 6,
-    'B': 4,
-    'C': 4,
-    'D': 5,
-    'E': 2,
-    'F': 0
+    'A': 2,
+    'B': 1,
+    'C': 1,
+    'E': 1,
+    'F': 1,
+    'D': 0
 }
 
-# A* Search Algorithm
-def a_star(graph, start, goal, heuristic):
-    visited = []
-    priority_queue = [(0 + heuristic[start], 0, start, [start])]
-    
-    while priority_queue:
-        # Sort by f(n) = g(n) + h(n) and get node with lowest value
-        priority_queue.sort()
-        current = priority_queue.pop(0)
-        f_cost = current[0]
-        g_cost = current[1]
-        node = current[2]
-        path = current[3]
-        
-        if node in visited:
-            continue
-        
-        visited.append(node)
-        print(f"Visiting {node} (g={g_cost}, h={heuristic[node]}, f={f_cost})")
-        
-        if node == goal:
-            print(f"\nGoal {goal} found!")
-            print(f"Path: {' -> '.join(path)}")
-            print(f"Total cost: {g_cost}")
-            return path
-        
-        for neighbor, weight in graph[node]:
-            if neighbor not in visited:
-                new_g_cost = g_cost + weight
-                new_f_cost = new_g_cost + heuristic[neighbor]
-                new_path = path + [neighbor]
-                priority_queue.append((new_f_cost, new_g_cost, neighbor, new_path))
-    
-    print(f"\nGoal {goal} not found!")
-    return None
-
-print("A* Search from 'A' to 'F':")
-a_star(graph, 'A', 'F', heuristic)
+astar(graph, 'A', 'D', heuristic)
+astar(graph, 'A', 'D', heuristic_bad)
