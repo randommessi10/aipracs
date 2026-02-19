@@ -1,10 +1,7 @@
 import math
 
-game_tree = [3,12,8,2,14,5,1,8]
-max_depth = int(math.log2(len(game_tree)))
-
 def minimax(depth, node_index, is_max, values, alpha, beta):
-
+    max_depth = int(math.log2(len(values)))
     # stop at leaf level
     if depth == max_depth:
         return values[node_index]
@@ -29,5 +26,6 @@ def minimax(depth, node_index, is_max, values, alpha, beta):
                 break
         return best
 
+game_tree = [3,12,8,2,14,5,1,8]
 result = minimax(0,0,True,game_tree,-math.inf,math.inf)
 print(f"Optimal value using Minimax with alpha-beta pruning is {result}")
