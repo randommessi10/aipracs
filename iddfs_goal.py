@@ -30,3 +30,16 @@ def iddfs(graph, start, target, max_depth):
             return
 
     print("Target not found")
+
+# Example graph
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['G'],
+    'F': [],
+    'G': []
+}
+
+iddfs(graph, 'A', 'G', 3)
