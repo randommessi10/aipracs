@@ -21,3 +21,26 @@ def befs(graph, start, goal, heuristic):
                     )
 
     print("Goal not found")
+
+# Example graph and heuristic
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['G'],
+    'F': [],
+    'G': []
+}
+
+heuristic = {
+    'A': 7,
+    'B': 6,
+    'C': 4,
+    'D': 5,
+    'E': 2,
+    'F': 3,
+    'G': 0
+}
+
+befs(graph, 'A', 'G', heuristic)
