@@ -32,3 +32,19 @@ def bfs(graph, start):
             for neighbor in graph[vertex]:
                 if neighbor not in visited:
                     queue.append(neighbor)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['G'],
+    'F': [],
+    'G': []
+}
+
+print("DFS Traversal:")
+dfs(graph, 'A')
+
+print("BFS Traversal:")
+bfs(graph, 'A')
